@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Geo Logger</string>
+
+    <string name="title_settings">Bluetooth</string>
+    <string name="title_log">Log</string>
+    <string name="title_offset">Position Offset</string>
+    <string name="title_map">Map</string>
+    <string name="title_agnss">AGNSS</string>
+    <string name="title_device">Device</string>
+    <string name="title_wls">WLS</string>
+    <string name="title_plot">Plot</string>
+    <string name="start_log">START LOG</string>
+    <string name="stop_log">STOP LOG</string>
+    <string name="connect">CONNECT</string>
+
+    <string name="information">Contact us</string>
+    <string name="company">Hi-Target international group</string>
+    <string name="version">1.1</string>
+    <string name="author">Nander Yang</string>
+    <string name="email">nander@hitargetgroup.com</string>
+    <string name="share">Share</string>
+    <string name="tip">Version Infos</string>
+
+    <string name="bt_deviceList_mated">Paired Bluetooth Device : </string>
+</resources>

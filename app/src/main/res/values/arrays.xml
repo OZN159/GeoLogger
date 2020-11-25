@@ -1,0 +1,19 @@
+<resources>
+    <string-array name="input_mode_list">
+        <item>CORS</item>
+        <item>Bluetooth</item>
+    </string-array>
+
+    <string-array name="output_mode_list">
+        <item>GSM</item>
+        <item>Wifi Hotspot</item>
+    </string-array>
+
+    <string-array name="output_protocol_list">
+        <item>Ntrip Client</item>
+        <item>Ntrip Server</item>
+        <item>Ntrip Caster</item>
+        <item>TCP Client</item>
+        <item>UDP</item>
+    </string-array>
+</resources>
