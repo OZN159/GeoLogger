@@ -639,7 +639,7 @@ public class Rinex {
 
         //write
         boolean status = mFileOperation.writeToFileAppend(mFile, epoch_str.getBytes(), epoch_str.length());
-        Log.d("epoch_str", epoch_str);
+        //Log.d("epoch_str", epoch_str);
 
         return status;
     }

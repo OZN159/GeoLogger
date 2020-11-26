@@ -6,10 +6,17 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -25,12 +32,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button foot2;
     private Button foot3;
 
+    private static final int PERMISSION_REQUEST = 100;
+    List<String> mPermissionList = new ArrayList();
+    String[] permissions = new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_LOCATION_EXTRA_COMMANDS", "android.permission.READ_PHONE_STATE"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        requestMyPermissions();
+        //requestMyPermissions();
+        initPermission();
 
         mRinex = new Rinex(getApplicationContext());
         mGnssContainer = new GNSSContainer(getApplicationContext(), mRinex);
@@ -164,6 +176,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //没有授权，编写申请权限代码
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 100);
+        } else {
+            //Log.d(TAG, "requestMyPermissions: location_extra permission");
+        }
+
+        if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -175,5 +196,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // for Activity#requestPermissions for more details.
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
         }
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //没有授权，编写申请权限代码
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 100);
+        } else {
+            //Log.d(TAG, "requestMyPermissions: location_extra permission");
+        }
+    }
+
+    private boolean initPermission() {
+        if (VERSION.SDK_INT >= 23) {
+            this.mPermissionList.clear();
+            for (int i = 0; i < this.permissions.length; i++) {
+                if (checkSelfPermission(this.permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                    this.mPermissionList.add(this.permissions[i]);
+                }
+            }
+            if (this.mPermissionList.size() > 0) {
+                requestPermissions(this.permissions, 100);
+
+                //restart the application
+//                exitApplication();
+
+                return true;
+            } else {
+                return true;
+            }
+        }
+        return true;
+    }
+
+    public void onRequestPermissionsResult(int i, String[] strArr, int[] iArr) {
+        super.onRequestPermissionsResult(i, strArr, iArr);
+        Object obj = null;
+        if (VERSION.SDK_INT >= 23 && 100 == i) {
+            for (int i2 : iArr) {
+                if (i2 == -1) {
+                    obj = 1;
+                    break;
+                }
+            }
+        }
+        if (obj != null) {
+            initPermission();
+        }
+    }
+
+    //exit APP
+    private void exitApplication(){
+
+        Toast.makeText(this, "The application will shut down", Toast.LENGTH_LONG).show();
+
+        finish();
+        System.exit(0);
     }
 }

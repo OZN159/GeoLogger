@@ -14,8 +14,8 @@ public class FileOperation {
     private Context mContext;
 
     //file storage path
-    private String FILEPATH = "/sdcard/UAVCaster/";
-    private String FILENAME = "configure.bin";
+    private String FILEPATH = "/sdcard/GeoLogger/";
+    private String FILENAME = "Rinex.20o";
 
     public FileOperation(Context context) {
         mContext = context;
